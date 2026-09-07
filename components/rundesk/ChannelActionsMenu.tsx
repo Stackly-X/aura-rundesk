@@ -53,7 +53,7 @@ export default function ChannelActionsMenu({
 
   return (
     <div
-      className="channel-actions-menu"
+      className="channel-actions-menu clickup-channel-actions-menu"
       role="menu"
       aria-label={
         isChannel
@@ -84,9 +84,11 @@ export default function ChannelActionsMenu({
       >
         <Settings2 size={15} />
 
-        {isChannel
-          ? "Channel details"
-          : "Conversation details"}
+        <span>
+          {isChannel
+            ? "Channel details"
+            : "Conversation details"}
+        </span>
       </button>
 
       <button
@@ -95,7 +97,7 @@ export default function ChannelActionsMenu({
         onClick={onMembers}
       >
         <UserPlus size={15} />
-        Members &amp; access
+        <span>Members &amp; access</span>
       </button>
 
       {/* Only real workspace channels should be editable. */}
@@ -106,7 +108,7 @@ export default function ChannelActionsMenu({
           onClick={onEdit}
         >
           <Pencil size={15} />
-          Edit channel
+          <span>Edit channel</span>
         </button>
       )}
 
@@ -121,9 +123,11 @@ export default function ChannelActionsMenu({
           <BellOff size={15} />
         )}
 
-        {muted
-          ? "Unmute notifications"
-          : "Mute notifications"}
+        <span>
+          {muted
+            ? "Unmute notifications"
+            : "Mute notifications"}
+        </span>
       </button>
 
       <button
@@ -132,7 +136,7 @@ export default function ChannelActionsMenu({
         onClick={() => void copyLink()}
       >
         <Copy size={15} />
-        Copy link
+        <span>Copy link</span>
       </button>
 
       {/* Prevent the normal channel-delete action
@@ -148,7 +152,7 @@ export default function ChannelActionsMenu({
             onClick={onDelete}
           >
             <Trash2 size={15} />
-            Delete channel
+            <span>Delete channel</span>
           </button>
         </>
       )}

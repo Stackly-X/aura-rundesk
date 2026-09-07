@@ -33,6 +33,8 @@ import {
   useState,
 } from "react";
 
+import { createPortal } from "react-dom";
+
 import { api } from "@/lib/rundesk/api";
 
 import type {
@@ -224,6 +226,69 @@ export default function Sidebar({
   const menuRef =
     useRef<HTMLDivElement>(null);
 
+  const [
+    floatingMenuPosition,
+    setFloatingMenuPosition,
+  ] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
+
+  function toggleFloatingRowMenu(
+    menuKey: string,
+    trigger: HTMLButtonElement,
+    estimatedHeight: number,
+  ) {
+    if (openMenu === menuKey) {
+      setOpenMenu(null);
+      setFloatingMenuPosition(null);
+      return;
+    }
+
+    const rect =
+      trigger.getBoundingClientRect();
+
+    const menuWidth = 320;
+    const gap = 8;
+    const viewportPadding = 12;
+
+    let left = rect.right + gap;
+
+    if (
+      left + menuWidth >
+      window.innerWidth - viewportPadding
+    ) {
+      left = Math.max(
+        viewportPadding,
+        rect.left - menuWidth - gap,
+      );
+    }
+
+    let top = Math.max(
+      viewportPadding,
+      rect.top - 8,
+    );
+
+    if (
+      top + estimatedHeight >
+      window.innerHeight - viewportPadding
+    ) {
+      top = Math.max(
+        viewportPadding,
+        window.innerHeight -
+          estimatedHeight -
+          viewportPadding,
+      );
+    }
+
+    setFloatingMenuPosition({
+      top,
+      left,
+    });
+
+    setOpenMenu(menuKey);
+  }
+
   useEffect(() => {
     setFavorites(
       readStoredSet(
@@ -263,6 +328,7 @@ export default function Sidebar({
         )
       ) {
         setOpenMenu(null);
+        setFloatingMenuPosition(null);
       }
     };
 
@@ -271,6 +337,7 @@ export default function Sidebar({
     ) => {
       if (event.key === "Escape") {
         setOpenMenu(null);
+        setFloatingMenuPosition(null);
       }
     };
 
@@ -1071,13 +1138,14 @@ export default function Sidebar({
                           ) => {
                             event.stopPropagation();
 
-                            setOpenMenu(
-                              menuOpen
-                                ? null
-                                : menuKey,
+                            toggleFloatingRowMenu(
+                              menuKey,
+                              event.currentTarget,
+                              390,
                             );
                           }}
                           aria-label={`Options for ${channel.name}`}
+                          aria-expanded={menuOpen}
                           title="Channel options"
                         >
                           <MoreHorizontal
@@ -1085,14 +1153,22 @@ export default function Sidebar({
                           />
                         </button>
 
-                        {menuOpen && (
-                          <div
-                            ref={
-                              menuRef
-                            }
-                            className="sidebar-item-menu channel-sidebar-menu"
-                            role="menu"
-                          >
+                        {menuOpen &&
+                          floatingMenuPosition &&
+                          typeof document !==
+                            "undefined" &&
+                          createPortal(
+                            <div
+                              ref={
+                                menuRef
+                              }
+                              className="sidebar-item-menu channel-sidebar-menu sidebar-item-menu-portal"
+                              role="menu"
+                              style={{
+                                top: floatingMenuPosition.top,
+                                left: floatingMenuPosition.left,
+                              }}
+                            >
                             <button
                               type="button"
                               onClick={() =>
@@ -1251,8 +1327,9 @@ export default function Sidebar({
                                 Permissions
                               </span>
                             </button>
-                          </div>
-                        )}
+                            </div>,
+                            document.body,
+                          )}
                       </div>
                     </div>
                   );
@@ -1267,13 +1344,14 @@ export default function Sidebar({
             ============================= */}
 
         <section className="sidebar-group dm-group">
-          <h3>
+          <h3 className="dm-section-heading">
             <span>
               Direct messages
             </span>
 
             <button
               type="button"
+              className="dm-add-button"
               onClick={onDMs}
               aria-label="New direct message"
               title="New direct message"
@@ -1412,13 +1490,14 @@ export default function Sidebar({
                           ) => {
                             event.stopPropagation();
 
-                            setOpenMenu(
-                              menuOpen
-                                ? null
-                                : menuKey,
+                            toggleFloatingRowMenu(
+                              menuKey,
+                              event.currentTarget,
+                              235,
                             );
                           }}
                           aria-label={`Options for ${name}`}
+                          aria-expanded={menuOpen}
                           title="Direct message options"
                         >
                           <MoreHorizontal
@@ -1426,14 +1505,22 @@ export default function Sidebar({
                           />
                         </button>
 
-                        {menuOpen && (
-                          <div
-                            ref={
-                              menuRef
-                            }
-                            className="sidebar-item-menu dm-sidebar-menu"
-                            role="menu"
-                          >
+                        {menuOpen &&
+                          floatingMenuPosition &&
+                          typeof document !==
+                            "undefined" &&
+                          createPortal(
+                            <div
+                              ref={
+                                menuRef
+                              }
+                              className="sidebar-item-menu dm-sidebar-menu sidebar-item-menu-portal"
+                              role="menu"
+                              style={{
+                                top: floatingMenuPosition.top,
+                                left: floatingMenuPosition.left,
+                              }}
+                            >
                             <button
                               type="button"
                               onClick={() =>
@@ -1524,8 +1611,9 @@ export default function Sidebar({
                                 </small>
                               </span>
                             </button>
-                          </div>
-                        )}
+                            </div>,
+                            document.body,
+                          )}
                       </div>
                     </div>
                   );
@@ -1535,7 +1623,7 @@ export default function Sidebar({
 
             <button
               type="button"
-              className="more-row"
+              className="more-row dm-new-message-row"
               onClick={onDMs}
             >
               <ChevronRight

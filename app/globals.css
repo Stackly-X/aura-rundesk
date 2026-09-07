@@ -4264,3 +4264,741 @@ body{font-size:13px;background:#fff}
       1fr !important;
   }
 }
+
+/* =========================================================
+   CLICKUP-LIKE CHANNEL / DM THREE-DOT MENUS — FINAL FIX
+   The sidebar row menus are portaled to document.body by Sidebar.tsx,
+   so they are never squeezed/clipped by the sidebar scroll container.
+   ========================================================= */
+
+.sidebar-menu-row {
+  position: relative !important;
+}
+
+.sidebar-row-menu-anchor {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 auto !important;
+}
+
+.sidebar-menu-row .sidebar-row-more {
+  display: grid !important;
+  place-items: center !important;
+  width: 26px !important;
+  min-width: 26px !important;
+  height: 26px !important;
+  margin-right: 2px !important;
+  padding: 0 !important;
+  color: #69707c !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  transition:
+    opacity 100ms ease,
+    color 100ms ease,
+    background 100ms ease !important;
+}
+
+.sidebar-menu-row:hover .sidebar-row-more,
+.sidebar-menu-row:focus-within .sidebar-row-more,
+.sidebar-menu-row.menu-open .sidebar-row-more {
+  opacity: 1 !important;
+}
+
+.sidebar-menu-row .sidebar-row-more:hover,
+.sidebar-menu-row.menu-open .sidebar-row-more {
+  color: #323741 !important;
+  background: #ececef !important;
+}
+
+/* The actual floating panel. It is a direct child of body. */
+body > .sidebar-item-menu-portal {
+  position: fixed !important;
+  z-index: 10000 !important;
+  display: block !important;
+  width: 286px !important;
+  min-width: 286px !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: calc(100vh - 24px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+  padding: 5px !important;
+  color: #343842 !important;
+  border: 1px solid #dedfe4 !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 14px 38px rgba(26, 30, 42, 0.16),
+    0 2px 8px rgba(26, 30, 42, 0.08) !important;
+  text-align: left !important;
+  isolation: isolate !important;
+  animation: rd-sidebar-menu-in 120ms ease-out !important;
+}
+
+body > .sidebar-item-menu-portal.dm-sidebar-menu {
+  width: 260px !important;
+  min-width: 260px !important;
+}
+
+@keyframes rd-sidebar-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+body > .sidebar-item-menu-portal > button {
+  display: grid !important;
+  grid-template-columns: 18px minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 35px !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding: 0 9px !important;
+  color: #3f444d !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  font-weight: 450 !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+body > .sidebar-item-menu-portal > button:hover:not(:disabled) {
+  color: #252a31 !important;
+  background: #f3f3f5 !important;
+}
+
+body > .sidebar-item-menu-portal > button:focus-visible {
+  outline: 2px solid #8b79e8 !important;
+  outline-offset: -2px !important;
+}
+
+body > .sidebar-item-menu-portal > button:disabled {
+  cursor: default !important;
+  opacity: 0.58 !important;
+}
+
+body > .sidebar-item-menu-portal > button > svg {
+  display: block !important;
+  width: 15px !important;
+  height: 15px !important;
+  margin: 0 !important;
+  color: #717680 !important;
+  stroke-width: 1.8 !important;
+}
+
+body > .sidebar-item-menu-portal > button > span {
+  display: block !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  color: inherit !important;
+  background: transparent !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+body > .sidebar-item-menu-portal > button > kbd {
+  display: block !important;
+  min-width: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #969aa3 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font: inherit !important;
+  font-size: 10px !important;
+  text-align: right !important;
+}
+
+body > .sidebar-item-menu-portal > button > svg:last-child:not(:first-child) {
+  justify-self: end !important;
+  width: 15px !important;
+  height: 15px !important;
+  color: #8e929a !important;
+}
+
+body > .sidebar-item-menu-portal .sidebar-menu-separator {
+  display: block !important;
+  width: calc(100% + 10px) !important;
+  height: 1px !important;
+  margin: 4px -5px !important;
+  background: #e9e9ed !important;
+}
+
+/* DM Close row keeps its secondary description. */
+body > .sidebar-item-menu-portal > .sidebar-close-dm {
+  min-height: 54px !important;
+  align-items: center !important;
+}
+
+body > .sidebar-item-menu-portal > .sidebar-close-dm > span {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 2px !important;
+  white-space: normal !important;
+}
+
+body > .sidebar-item-menu-portal > .sidebar-close-dm strong {
+  color: #343842 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+body > .sidebar-item-menu-portal > .sidebar-close-dm small {
+  color: #8c9099 !important;
+  font-size: 10.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.25 !important;
+}
+
+/* Also polish the channel header three-dot menu without changing behavior. */
+.channel-menu-anchor {
+  position: relative !important;
+}
+
+.clickup-channel-actions-menu {
+  position: absolute !important;
+  z-index: 950 !important;
+  top: 34px !important;
+  left: 0 !important;
+  width: 250px !important;
+  min-width: 250px !important;
+  margin: 0 !important;
+  padding: 6px !important;
+  color: #3f444d !important;
+  border: 1px solid #dedfe4 !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 14px 38px rgba(26, 30, 42, 0.16),
+    0 2px 8px rgba(26, 30, 42, 0.08) !important;
+  text-align: left !important;
+}
+
+.clickup-channel-actions-menu .channel-actions-title {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-height: 36px !important;
+  margin: 0 0 4px !important;
+  padding: 0 7px 5px !important;
+  border-bottom: 1px solid #ececf0 !important;
+}
+
+.clickup-channel-actions-menu .channel-actions-title strong {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  color: #2f343c !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.clickup-channel-actions-menu .channel-actions-title button {
+  display: grid !important;
+  place-items: center !important;
+  width: 26px !important;
+  height: 26px !important;
+  flex: 0 0 auto !important;
+  border-radius: 7px !important;
+}
+
+.clickup-channel-actions-menu .channel-actions-title button:hover {
+  background: #f2f2f4 !important;
+}
+
+.clickup-channel-actions-menu > button {
+  display: grid !important;
+  grid-template-columns: 20px minmax(0, 1fr) !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 38px !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding: 0 9px !important;
+  color: #41464f !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  font-size: 12px !important;
+  text-align: left !important;
+}
+
+.clickup-channel-actions-menu > button:hover {
+  background: #f3f3f5 !important;
+}
+
+.clickup-channel-actions-menu > button > svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: #737882 !important;
+}
+
+.clickup-channel-actions-menu > button > span {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.clickup-channel-actions-menu > button.danger,
+.clickup-channel-actions-menu > button.danger > svg {
+  color: #d64f58 !important;
+}
+
+.clickup-channel-actions-menu .menu-separator {
+  height: 1px !important;
+  margin: 5px -6px !important;
+  background: #e9e9ed !important;
+}
+
+@media (max-width: 720px) {
+  body > .sidebar-item-menu-portal,
+  body > .sidebar-item-menu-portal.dm-sidebar-menu {
+    width: min(320px, calc(100vw - 24px)) !important;
+    min-width: min(320px, calc(100vw - 24px)) !important;
+  }
+}
+/* =========================================================
+   FINAL DM SIDEBAR ROW FIX
+   Append-only override for the EXISTING Sidebar.tsx structure.
+   No JSX/functionality changes required.
+   ========================================================= */
+
+/* Section heading: keep label and + on one line. */
+.sidebar .sidebar-group.dm-group > h3 {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  margin: 0 !important;
+  padding: 0 5px !important;
+}
+
+.sidebar .sidebar-group.dm-group > h3 > span {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* ClickUp-like: + is hidden until the Direct Messages area is hovered. */
+.sidebar .sidebar-group.dm-group > h3 > button {
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 24px !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #747985 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 120ms ease, background 120ms ease !important;
+}
+
+.sidebar .sidebar-group.dm-group:hover > h3 > button,
+.sidebar .sidebar-group.dm-group > h3:focus-within > button {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.sidebar .sidebar-group.dm-group > h3 > button:hover {
+  background: #ececef !important;
+}
+
+/* List itself must be a vertical list, not a loose block layout. */
+.sidebar .dm-group .sidebar-dm-list {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  gap: 1px !important;
+}
+
+/* Every DM is ONE ROW: [avatar] [name] ........ [...] */
+.sidebar .dm-group .dm-row-wrap {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 26px !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  margin: 0 !important;
+  padding: 0 3px !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+}
+
+.sidebar .dm-group .dm-row-wrap:hover {
+  background: #eeeeF2 !important;
+}
+
+.sidebar .dm-group .dm-row-wrap.active {
+  background: #eeedf2 !important;
+}
+
+/* Main click target fills the left side of the row. */
+.sidebar .dm-group .dm-row-wrap > .dm-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 0 3px !important;
+  overflow: hidden !important;
+  color: #4e535d !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+/* The avatar/placeholder is BEFORE the name and can never jump above it. */
+.sidebar .dm-group .dm-row > .mini-avatar {
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 22px !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  max-width: 22px !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  max-height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #6958d3, #9c6ddd) !important;
+  font-size: 7px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+/* Name stays inline with avatar. */
+.sidebar .dm-group .dm-row > .dm-name {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  color: #4c515b !important;
+  background: transparent !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 22px !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.sidebar .dm-group .dm-row-wrap.unread .dm-name {
+  color: #252a32 !important;
+  font-weight: 700 !important;
+}
+
+/* Draft/unread stay at end of the name area rather than forcing a new line. */
+.sidebar .dm-group .dm-row > em,
+.sidebar .dm-group .dm-row > .dm-unread-count {
+  flex: 0 0 auto !important;
+}
+
+.sidebar .dm-group .dm-row > em {
+  margin-left: 3px !important;
+  font-size: 8px !important;
+}
+
+.sidebar .dm-group .dm-row > .dm-unread-count {
+  display: grid !important;
+  place-items: center !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  padding: 0 4px !important;
+  color: #fff !important;
+  border-radius: 9px !important;
+  background: #765fd4 !important;
+  font-size: 8px !important;
+}
+
+/* Three-dot anchor is the second grid column, vertically centered. */
+.sidebar .dm-group .dm-row-wrap > .sidebar-row-menu-anchor {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  align-self: center !important;
+  justify-self: end !important;
+  width: 26px !important;
+  min-width: 26px !important;
+  height: 26px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Three dots only appear on row hover/focus/menu-open, like ClickUp. */
+.sidebar .dm-group .dm-row-wrap .dm-more.sidebar-row-more {
+  display: grid !important;
+  place-items: center !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #6f7580 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: none !important;
+}
+
+.sidebar .dm-group .dm-row-wrap:hover .dm-more.sidebar-row-more,
+.sidebar .dm-group .dm-row-wrap:focus-within .dm-more.sidebar-row-more,
+.sidebar .dm-group .dm-row-wrap.menu-open .dm-more.sidebar-row-more {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.sidebar .dm-group .dm-row-wrap .dm-more.sidebar-row-more:hover,
+.sidebar .dm-group .dm-row-wrap.menu-open .dm-more.sidebar-row-more {
+  color: #30353e !important;
+  background: #e2e2e7 !important;
+}
+
+/* Keep "New message" as one subtle compact row below the list. */
+.sidebar .dm-group .sidebar-dm-list > .more-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 29px !important;
+  min-height: 29px !important;
+  gap: 6px !important;
+  margin: 1px 0 0 !important;
+  padding: 0 7px !important;
+  color: #8a8f99 !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+.sidebar .dm-group .sidebar-dm-list > .more-row:hover {
+  color: #555b65 !important;
+  background: #f0f0f3 !important;
+}
+
+.sidebar .dm-group .sidebar-dm-list > .more-row svg {
+  display: block !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+/* =========================================================
+   FINAL NEW DIRECT MESSAGE MODAL FIX
+   Keeps DM functionality unchanged.
+   Fixes search alignment + removes the unwanted purple square.
+   ========================================================= */
+
+/* Put the search icon INSIDE the search field instead of above it. */
+.compact-dm-dialog > .dm-search {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  width: auto !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  gap: 8px !important;
+  margin: 12px 14px 8px !important;
+  padding: 0 10px !important;
+  color: #737985 !important;
+  border: 1px solid #d9dbe2 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  font-weight: 400 !important;
+}
+
+.compact-dm-dialog > .dm-search:focus-within {
+  border-color: #9a88ea !important;
+  box-shadow: 0 0 0 2px rgba(107, 78, 255, 0.08) !important;
+}
+
+.compact-dm-dialog > .dm-search > svg {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 17px !important;
+  height: 17px !important;
+  margin: 0 !important;
+  color: #6f7581 !important;
+}
+
+.compact-dm-dialog > .dm-search > input {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #343942 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+}
+
+.compact-dm-dialog > .dm-search > input::placeholder {
+  color: #a0a4ad !important;
+}
+
+/* Clean, compact ClickUp-like member rows. */
+.compact-dm-dialog .dm-user-results {
+  min-height: 115px !important;
+  max-height: 350px !important;
+  padding: 3px 12px 10px !important;
+}
+
+.compact-dm-dialog .dm-user-results > button {
+  display: grid !important;
+  grid-template-columns: 34px minmax(0, 1fr) 20px !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 48px !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding: 6px 7px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  text-align: left !important;
+}
+
+.compact-dm-dialog .dm-user-results > button:hover {
+  background: #f6f5f8 !important;
+}
+
+.compact-dm-dialog .dm-user-results > button.selected {
+  background: #f3f0fb !important;
+}
+
+/* Keep the real Avatar component untouched and properly aligned. */
+.compact-dm-dialog .dm-user-results > button > .rd-avatar {
+  align-self: center !important;
+  justify-self: start !important;
+  margin: 0 !important;
+}
+
+/* Name + email stay together in the middle column. */
+.compact-dm-dialog .dm-user-results > button > span {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  gap: 2px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.compact-dm-dialog .dm-user-results > button > span > strong {
+  overflow: hidden !important;
+  max-width: 100% !important;
+  color: #2d323b !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.compact-dm-dialog .dm-user-results > button > span > small {
+  overflow: hidden !important;
+  max-width: 100% !important;
+  color: #858b97 !important;
+  font-size: 10px !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/*
+ * IMPORTANT:
+ * An old broad rule ".dm-dialog i" gives every <i> a purple avatar
+ * background. .dm-check is also an <i>, which caused the unwanted
+ * purple square shown in the screenshot.
+ */
+.compact-dm-dialog .dm-user-results .dm-check {
+  display: grid !important;
+  place-items: center !important;
+  justify-self: end !important;
+  width: 18px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 0 !important;
+  font-style: normal !important;
+}
+
+/* Only show a small check when the person is actually selected. */
+.compact-dm-dialog .dm-user-results > button.selected .dm-check {
+  color: #654fd1 !important;
+  border-color: #cfc6f4 !important;
+  background: #f0ecff !important;
+}
+
+.compact-dm-dialog .dm-user-results .dm-check > svg {
+  display: block !important;
+  width: 13px !important;
+  height: 13px !important;
+  margin: 0 !important;
+  color: currentColor !important;
+}
+
+/* Keep footer clean and aligned. */
+.compact-dm-dialog > footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  padding: 12px 14px 14px !important;
+}
+
+.compact-dm-dialog > footer .primary-button {
+  min-width: 78px !important;
+}
